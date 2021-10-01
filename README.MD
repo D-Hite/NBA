@@ -16,3 +16,6 @@ avgs.ipynb and lines.ipynb
 
 actual model:
 Model_Modifier.ipynb
+
+
+read documentation.txt for more in depth information
