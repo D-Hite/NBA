@@ -11,6 +11,15 @@ combine.ipynb
  lines.ipynb
   combines line data with combined stat files in DATA/combinedv1 to form data in DATA/linesv1
   this is important so that game lines are matched with respective Game Id's
+  
+    LINE DATA FROM https://s3.sportsdatabase.com/NBA/query.html
+
+    some other possible websites to get from if above website does not work
+    https://www.kaggle.com/ehallmar/nba-historical-stats-and-betting-data?select=nba_betting_spread.csv
+
+    https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba/nbaoddsarchives.htm
+
+    https://www.goldsheet.com/histnba.php
 
 avgs.ipynb
   may need updating with further model updates
