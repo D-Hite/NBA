@@ -1,0 +1,77 @@
+get_data.ipynb
+  Uses nba_api to scrape data from www.nba.com
+    currently uses advanced, fourfactors, misc and scoring endpoints
+  saves data as csv files in DATA/raw
+    
+combine.ipynb
+  combines desired raw data from DATA/raw
+  can do one season at a time or multiple
+  saves files to DATA/combinedv1
+ 
+ lines.ipynb
+  combines line data with combined stat files in DATA/combinedv1 to form data in DATA/linesv1
+  this is important so that game lines are matched with respective Game Id's
+  
+    LINE DATA FROM https://s3.sportsdatabase.com/NBA/query.html
+
+    some other possible websites to get from if above website does not work
+    https://www.kaggle.com/ehallmar/nba-historical-stats-and-betting-data?select=nba_betting_spread.csv
+
+    https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba/nbaoddsarchives.htm
+
+    https://www.goldsheet.com/histnba.php
+
+avgs.ipynb
+  may need updating with further model updates
+  calculates teams running average of stats throughout the season
+  different parameters can be home/away games and last x amount of games
+  saves csv files to DATA/avgsv1 or DATA/avgsv2
+  
+Model_Modifier.ipynb
+  (uses ModelStats.py)
+  Allows user to select any parameters in the following list to calculate predictions
+  currently user has to write own function as the provided one is just an example
+
+['PTS', 'FGM', 'FGA', 'FG_PCT', 'FG3M', 'FG3A',
+ 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 'OREB', 'DREB', 'REB', 'AST', 'STL',
+       'BLK', 'TOV', 'PF', 'E_OFF_RATING',
+       'OFF_RATING', 'E_DEF_RATING', 'DEF_RATING', 'E_NET_RATING',
+       'NET_RATING', 'AST_PCT', 'AST_TOV', 'AST_RATIO', 'OREB_PCT', 'DREB_PCT',
+       'REB_PCT', 'E_TM_TOV_PCT', 'TM_TOV_PCT', 'EFG_PCT', 'TS_PCT', 'USG_PCT',
+       'E_USG_PCT', 'E_PACE', 'PACE', 'PACE_PER40', 'POSS', 'PIE', 'FTA_RATE',
+       'OPP_EFG_PCT', 'OPP_FTA_RATE', 'OPP_TOV_PCT', 'OPP_OREB_PCT',
+       'PTS_OFF_TOV', 'PTS_2ND_CHANCE', 'PTS_FB', 'PTS_PAINT',
+       'OPP_PTS_OFF_TOV', 'OPP_PTS_2ND_CHANCE', 'OPP_PTS_FB', 'OPP_PTS_PAINT',
+       'BLKA', 'PFD', 'PCT_FGA_2PT', 'PCT_FGA_3PT', 'PCT_PTS_2PT',
+       'PCT_PTS_2PT_MR', 'PCT_PTS_3PT', 'PCT_PTS_FB', 'PCT_PTS_FT',
+       'PCT_PTS_OFF_TOV', 'PCT_PTS_PAINT', 'PCT_AST_2PM', 'PCT_UAST_2PM',
+       'PCT_AST_3PM', 'PCT_UAST_3PM', 'PCT_AST_FGM', 'PCT_UAST_FGM']
+       
+       allows different weights to be placed on the different averages (home/away averages, last x averages, normal averages)
+       allows different weights to be placed on different parameters in list above
+       
+ ModelStats.py
+  class ModelStats():
+  
+    given a list of s seasons and f files
+    ms.load_season(s, f) will hold essential data for Model
+   
+   class Model():
+    given
+      a loaded ModelStats object
+      a list of seasons
+      a list of files
+      a calculation function
+      an ending calculation function
+      file weights
+      column weights
+      
+      calling
+        run_model(ms, seasons, files, calc_func, calc_cols, end_calc_func, file_weights, column_weights)
+      will populate the model object with most importantly
+      Model.results
+        a pandas dataframe of all games, the calculated prediction, and the resulting bet for each game
+      Model.acc
+        a dictionary of accuracies for each season calculated
+       
+      

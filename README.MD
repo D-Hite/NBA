@@ -15,4 +15,7 @@ avgs.ipynb and lines.ipynb
 (DATA FROM avgs IS IN /DATA/avgsV1 and DATA/avgsv2)
 
 actual model:
-classmodel.ipynb
+Model_Modifier.ipynb
+
+
+read documentation.txt for more in depth information
