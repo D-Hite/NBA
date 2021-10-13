@@ -14,6 +14,7 @@ TEAMS = ['ATL', 'BKN', 'BOS', 'CHA', 'CHI', 'CLE', 'DAL', 'DEN', 'DET', 'GSW', '
 def team_filter(df, team):
     return df[df['TEAM_ABBREVIATION'] == team]
 
+
 class ModelStats():
 
     def __init__(self):
@@ -234,7 +235,7 @@ class Model():
                     continue
                 else:
                     self.norm_files_np(ms, s, f, calc_func, calc_cols, column_weights, file_weights)
-        self.apply_end(seasons, end_calc_func)
+        self.apply_end(seasons, end_calc_func, file_weights.keys())
         self.format_results(seasons)
                 
     def norm_files_np(self, ms, s, f, calc_func, calc_cols, column_weights, file_weights):
@@ -284,15 +285,18 @@ class Model():
             out_d[hngid[i]] = fweights['ha'+f[4:]] * calcfunc(hnp[i], anp[i], colweights)
         self.cf_numbers['ha'+f[4:]+s] = out_d
             
-    def apply_end(self, seasons, ecfunc):
+    def apply_end(self, seasons, ecfunc, fkeys):
         for s in seasons:
             out_d = {}
             for i in list(self.cf_numbers['avgs'+s]):
-                out_d[i] = ecfunc(self.get_edata(s, i))
+                out_d[i] = ecfunc(self.get_edata(s, i, fkeys))
             self.end_d[s] = out_d
         
-    def get_edata(self, s, i):
-        return [self.cf_numbers['avgs'+s][i], self.cf_numbers['last10'+s][i], self.cf_numbers['haavgs'+s][i]]
+    def get_edata(self, s, i, filekeys):
+        relist = []
+        for key in filekeys:
+            relist.append(self.cf_numbers[key+s][i])
+        return relist
     
     def format_results(self, seasons):
         for s in seasons:
